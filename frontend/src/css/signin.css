@@ -1,0 +1,169 @@
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  background-color: whitesmoke;
+}
+
+.login-page {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-image: linear-gradient(90deg, #e0e1e5, royalblue);
+  height: 100vh;
+}
+
+.rec-shape {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border: 1px solid whitesmoke;
+  box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.6);
+  border-radius: 2rem;
+  background-color: whitesmoke;
+  margin: 5rem 0;
+}
+
+.left-rec-shape {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 6rem 4rem;
+  width: 50%;
+}
+
+.sign-in-text {
+  font-size: 40px;
+  line-height: 23px;
+  text-align: center;
+  padding-bottom: 35px;
+}
+
+.social-icons {
+  display: flex;
+  gap: 8px;
+  padding-bottom: 18px;
+}
+
+.icons-image {
+  height: 36px;
+  width: 36px;
+  border: 1px solid #e0e1e5;
+  padding: 8px;
+  border-radius: 6px;
+}
+
+.left-small-text {
+  font-size: 12px;
+  line-height: 10px;
+  color: rgba(0, 0, 0, 0.45);
+  padding-bottom: 12px;
+}
+
+#username {
+  background-color: #e0e1e5;
+  padding: 10px;
+  border-radius: 8px;
+  border: none;
+  margin-bottom: 12px;
+  width: 300px;
+}
+
+#password {
+  background-color: #e0e1e5;
+  padding: 10px;
+  border-radius: 8px;
+  border: none;
+  width: 300px;
+  margin-bottom: 18px;
+}
+
+.forgot-pass {
+  font-size: 18px;
+  line-height: 16px;
+  color: rgba(0, 0, 0, 0.45);
+  text-align: center;
+  padding-bottom: 18px;
+  cursor: pointer;
+}
+
+.pass-underline {
+  text-decoration: underline;
+}
+
+.left-btn-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.left-sign-in-btn {
+  background-color: royalblue;
+  color: whitesmoke;
+  font-size: 18px;
+  padding: 10px;
+  width: 160px;
+  border-radius: 6px;
+  border: none;
+  box-shadow: inset 0px 5px 5px -5px rgba(0, 0, 0, 0.5);
+  cursor: pointer;
+  text-align: center;
+  text-decoration: none;
+}
+
+.left-sign-in-btn:hover {
+  background-color: #3d7cda; /* Change background color on hover */
+}
+
+.right-rec-shape {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 50%;
+  height: 520px;
+  background-color: royalblue;
+  border-top-left-radius: 8rem;
+  border-bottom-left-radius: 8rem;
+  border-top-right-radius: 2rem;
+  border-bottom-right-radius: 2rem;
+  text-align: center;
+}
+
+.big-text {
+  font-size: 33px;
+  line-height: 40px;
+  text-align: center;
+  color: whitesmoke;
+}
+
+.right-small-text {
+  font-size: 16px;
+  line-height: 30px;
+  text-align: center;
+  color: whitesmoke;
+  width: 80%;
+  padding-top: 18px;
+}
+
+.right-sign-up-btn {
+  background-color: whitesmoke;
+  color: royalblue;
+  font-size: 18px;
+  padding: 10px;
+  width: 160px;
+  margin-top: 28px;
+  border-radius: 6px;
+  border: 3px solid whitesmoke;
+  cursor: pointer;
+  text-decoration: none;
+  transition: background-color 0.3s ease;
+}
+
+.right-sign-up-btn:hover {
+  background-color: #3d7cda;
+  color: whitesmoke;
+}

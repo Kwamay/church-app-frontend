@@ -1,0 +1,70 @@
+.App {
+  font-family: Arial, sans-serif;
+  margin: 3rem 36px;
+}
+
+.page-header-container {
+  display: flex;
+  justify-content: space-between;
+}
+
+.page-subheading {
+  padding-top: 8px;
+  color: rgb(77, 75, 75);
+  line-height: 18px;
+  font-size: 16px;
+}
+
+.add-member {
+  margin: 15px 0px;
+  border-radius: 33px;
+  border-style: none;
+  padding: 8px 20px;
+  background-color: royalblue;
+  font-size: 15px;
+  color: whitesmoke;
+  cursor: pointer;
+}
+
+.add-member:hover {
+  background-color: #0056b3;
+  color: #fff;
+  transition: all 0.5s;
+}
+
+.add-member:active {
+  background-color: lightblue;
+  color: #fff;
+  transition: all 0.5s;
+}
+
+.field-section {
+  display: flex;
+  justify-content: space-between;
+  gap: 6px;
+  margin-top: 5rem;
+}
+
+.field-container {
+  background-color: #d0eafb;;
+  width: 25vw;
+  border-radius: 12px;
+  padding: 10px 8px;
+}
+
+.dashboard-field-container {
+  display: flex;
+  justify-content: space-between;
+  padding-bottom: 4rem;
+  
+}
+
+.dashboard-field {
+  font-size: 18px;
+  font: 300;
+}
+
+.counter {
+  font-size: 30px;
+  font-weight: 200;
+}
