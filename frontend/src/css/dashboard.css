@@ -38,11 +38,17 @@
   transition: all 0.5s;
 }
 
+.intro {
+  font-weight: 700;
+  font-size: 36px;
+  margin-bottom: 8px;
+}
+
 .field-section {
   display: flex;
   justify-content: space-between;
-  gap: 6px;
-  margin-top: 5rem;
+  /* gap: 6px;   */
+  margin-top: 3rem;
 }
 
 .field-container {
@@ -67,4 +73,40 @@
 .counter {
   font-size: 30px;
   font-weight: 200;
+}
+
+.unit-counter-container {
+  display: flex;
+  justify-content: space-between;
+}
+
+.dashboard-btn {
+  border-radius: 33px;
+  border-style: none;
+  padding: 8px 20px;
+  background-color: royalblue;
+  font-size: 15px;
+  color: whitesmoke;
+  cursor: pointer; 
+}
+
+.second-field-section {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 2rem;
+  background-color: rgb(230, 232, 236);
+  padding: 24px 16px;
+  border-radius: 18px;
+  font-weight: 600;
+}
+
+.second-dashbord-btn {
+  border-radius: 33px;
+  border-style: none;
+  padding: 8px 20px;
+  background-color: whitesmoke;
+  font-size: 15px;
+  cursor: pointer; 
+  font-weight: 600;
+
 }

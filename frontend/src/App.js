@@ -2,6 +2,7 @@ import React from "react";
 import { BrowserRouter as Router, Routes, Route, useLocation } from "react-router-dom";
 import Signup from "./component/Signup";
 import Signin from "./component/Signin";
+import ForgotPassword from "./component/ForgotPassword";
 import "./css/signin.css";
 import Sidebar from "./component/Sidebar";
 import Dashboard from "./pages/Dashboard";
@@ -12,7 +13,7 @@ import "./css/app.css";
 
 function App() {
   const location = useLocation();
-  const hideSidebarPaths = ['/', '/signup'];
+  const hideSidebarPaths = ['/', '/signup', '/forgot-password'];
 
   return (
     <div className="app-container">
@@ -22,6 +23,7 @@ function App() {
       <div className="app-content">
       <Routes>
         <Route path="/" element={<Signin />} />
+        <Route path="/forgot-password" element={<ForgotPassword />} />
         <Route path="/signup" element={<Signup />} />
         <Route path="/dashboard" element={<Dashboard />} />
         <Route path="/members" element={<Members />} />

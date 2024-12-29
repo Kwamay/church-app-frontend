@@ -1,9 +1,9 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
-import google from "../images/google.png";
-import facebook from "../images/facebook.png";
-import github from "../images/github.png";
-import linkedin from "../images/linkedin.png";
+// import google from "../images/google.png";
+// import facebook from "../images/facebook.png";
+// import github from "../images/github.png";
+// import linkedin from "../images/linkedin.png";
 import "../css/signin.css";
 
 function Signin() {
@@ -28,7 +28,7 @@ function Signin() {
         <div className="rec-shape">
           <div className="left-rec-shape">
             <h1 className="sign-in-text">Sign In</h1>
-            <div className="social-icons">
+            {/* <div className="social-icons">
               <a href="https://google.com" className="icons-link">
                 <img src={google} alt="google" className="icons-image" />
               </a>
@@ -41,7 +41,7 @@ function Signin() {
               <a href="https://linkedin.com" className="icons-link">
                 <img src={linkedin} alt="linkedin" className="icons-image" />
               </a>
-            </div>
+            </div> */}
             <p className="left-small-text">or use your email password</p>
             <form onSubmit={handleSubmit}>
               <div>
@@ -63,7 +63,7 @@ function Signin() {
                 />
               </div>
               <p className="forgot-pass">
-                Forgot Your <span className="pass-underline">Password?</span>
+                Forgot Your <Link type="submit" to="/forgot-password" className="pass-underline">Password?</Link>
               </p>
               <div className="left-btn-container">
               <Link type="submit" to="/" className="left-sign-in-btn">
