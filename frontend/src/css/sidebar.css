@@ -21,6 +21,7 @@
 .logo{
   font-size: 30px;
   cursor: pointer;
+  height: 12vh;
 }
 .bars{
   display: flex;

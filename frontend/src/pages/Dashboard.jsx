@@ -1,4 +1,5 @@
 import React from "react";
+import { Link } from "react-router-dom";
 import "../css/dashboard.css";
 import { IoInformationCircleOutline } from "react-icons/io5";
 
@@ -37,7 +38,7 @@ const Dashboard = () => {
     </div>
     <div className="second-field-section">
       <p>Quick Things you can do</p>
-      <button className="second-dashbord-btn">Add Member</button>
+      <Link className="second-dashbord-btn" to="/addmembers">Add Member</Link>
       <button className="second-dashbord-btn">Send SMS</button>
       <button className="second-dashbord-btn">Add First Timer</button>
       <button className="second-dashbord-btn">Record Offering</button>

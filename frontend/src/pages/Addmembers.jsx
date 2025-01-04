@@ -51,10 +51,10 @@ const Addmembers = () => {
               required
             >
               <option value="">Select Membership</option>
-              <option value="Leader">Leader</option>
-              <option value="New Member">New Member</option>
-              <option value="Executive">Executive</option>
-              <option value="Old Member">Old Member</option>
+              <option value="new-convert">New Convert</option>
+              <option value="visitor">Visitor</option>
+              <option value="war-night-participant">War Night Participant</option>
+              <option value="old-member">Old Member</option>
             </select>
           </div>
           <div className="form-group">
@@ -117,19 +117,24 @@ const Addmembers = () => {
               <option value="Old Member">Female</option>
             </select>
             </div>
-          <div className="form-group">
-            <label className="label">Role</label>
+            <div className="form-group">
+            <label className="label">Date</label>
             <input
               className="label-input"
-              type="text"
+              type="date"
               name="role"
               value={formData.role}
               onChange={handleChange}
               required
             />
           </div>
+          <div className="form-group-2">
+          <h3>Group</h3>
+          <p>No group added yet</p>
+          <button>Choose group</button>
+          </div>
           <button type="submit" className="submit-button">
-            Add Member
+            Save Information
           </button>
         </form>
         <div className="form-group-pic">

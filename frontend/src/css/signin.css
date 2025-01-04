@@ -176,7 +176,7 @@ body {
   flex-direction: column;
   justify-content: flex-start;
   align-items: flex-start;
-  margin: 2rem 22rem;
+  margin: 6rem 22rem;
   padding: 8px 10px 4rem;
   background-color: rgb(202, 225, 240);  
   box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.6);
@@ -184,8 +184,9 @@ body {
  }
 
  .church-logo {
-  height: 40vh;
+  height: 18vh;
   width: 30vw;
+  padding-left: 30px;
  }
 
  .forgot-pass-content {
