@@ -47,8 +47,8 @@ function Signin() {
               <div>
                 <input
                   type="email"
-                  id="username"
-                  placeholder="Username"
+                  id="email"
+                  placeholder="Email"
                   value={username}
                   onChange={(e) => setUsername(e.target.value)}
                 />

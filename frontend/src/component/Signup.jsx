@@ -8,7 +8,8 @@ import "../css/signup.css";
 
 const SignUpPage = () => {
   // State variables for form fields
-  const [name, setName] = useState("");
+  const [firstname, setFirstname] = useState("");
+  const [lastname, setLastname] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
@@ -43,9 +44,18 @@ const SignUpPage = () => {
                 <input
                   type="name"
                   id="name"
-                  placeholder="Name"
-                  value={name}
-                  onChange={(e) => setName(e.target.value)}
+                  placeholder="First Name"
+                  value={firstname}
+                  onChange={(e) => setFirstname(e.target.value)}
+                />
+              </div>
+              <div>
+                <input
+                  type="name"
+                  id="name"
+                  placeholder="Last Name"
+                  value={lastname}
+                  onChange={(e) => setLastname(e.target.value)}
                 />
               </div>
               <div>

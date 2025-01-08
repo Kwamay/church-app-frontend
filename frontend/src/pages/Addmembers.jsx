@@ -1,13 +1,18 @@
 import React, { useState } from "react";
-
 import "../css/app.css";
 
-const Addmembers = () => {
+const AddMembers = () => {
   const [formData, setFormData] = useState({
-    name: "",
+    membership: "",
+    firstName: "",
+    lastName: "",
     email: "",
     phone: "",
-    role: "",
+    maritalStatus: "",
+    gender: "",
+    date: "",
+    address: "",
+    group: "",
     profilePicture: null,
   });
 
@@ -27,7 +32,7 @@ const Addmembers = () => {
   const handleSubmit = (e) => {
     e.preventDefault();
     console.log("Form Data Submitted:", formData);
-    // Code to handle form submission here, e.g., API call
+    // Add form submission logic here (e.g., API call)
   };
 
   return (
@@ -42,6 +47,57 @@ const Addmembers = () => {
       <div className="form-container">
         <form onSubmit={handleSubmit} className="add-member-form">
           <div className="form-group">
+            <label className="label">First Name</label>
+            <input
+              className="label-input"
+              type="text"
+              name="first-name"
+              placeholder="First name"
+              value={formData.firstName}
+              onChange={handleChange}
+              required
+            />
+          </div>
+          <div className="form-group">
+            <label className="label">Surname</label>
+            <input
+              className="label-input"
+              type="text"
+              name="last-name"
+              placeholder="Last name"
+              value={formData.lastName}
+              onChange={handleChange}
+              required
+            />
+          </div>
+
+          <div className="form-group">
+            <label className="label">Email</label>
+            <input
+              className="label-input"
+              type="email"
+              name="email"
+              placeholder="Email"
+              value={formData.email}
+              onChange={handleChange}
+              required
+            />
+          </div>
+
+          <div className="form-group">
+            <label className="label">Phone Number</label>
+            <input
+              className="label-input"
+              type="text"
+              name="phone"
+              placeholder="Enter a phone number"
+              value={formData.phone}
+              onChange={handleChange}
+              required
+            />
+          </div>
+
+          <div className="form-group">
             <label className="label">Membership</label>
             <select
               className="label-input"
@@ -53,90 +109,96 @@ const Addmembers = () => {
               <option value="">Select Membership</option>
               <option value="new-convert">New Convert</option>
               <option value="visitor">Visitor</option>
-              <option value="war-night-participant">War Night Participant</option>
+              <option value="war-night-participant">
+                War Night Participant
+              </option>
               <option value="old-member">Old Member</option>
             </select>
           </div>
-          <div className="form-group">
-            <label className="label">Name</label>
-            <input
-              className="label-input"
-              type="text"
-              name="name"
-              value={formData.name}
-              onChange={handleChange}
-              required
-            />
-          </div>
-          <div className="form-group">
-            <label className="label">Email</label>
-            <input
-              className="label-input"
-              type="email"
-              name="email"
-              value={formData.email}
-              onChange={handleChange}
-              required
-            />
-          </div>
-          <div className="form-group">
-            <label className="label">Phone Number</label>
-            <input
-              className="label-input"
-              type="text"
-              name="phone"
-              value={formData.phone}
-              onChange={handleChange}
-              required
-            />
-          </div>
+
           <div className="form-group-2">
-          <select
+            <select
               className="label-input-2"
-              name="membership"
-              value={formData.membership}
+              name="maritalStatus"
+              value={formData.maritalStatus}
               onChange={handleChange}
               required
             >
               <option value="">Marital Status</option>
-              <option value="Leader">Single</option>
-              <option value="New Member">Engaged</option>
-              <option value="Executive">Marriaged</option>
-              <option value="Old Member">Single Parent</option>
-              <option value="Old Member">Divorced</option>
+              <option value="single">Single</option>
+              <option value="engaged">Engaged</option>
+              <option value="married">Married</option>
+              <option value="single-parent">Single Parent</option>
+              <option value="divorced">Divorced</option>
             </select>
-           <select
+
+            <select
               className="label-input-2"
-              name="membership"
-              value={formData.membership}
+              name="gender"
+              value={formData.gender}
               onChange={handleChange}
               required
             >
               <option value="">Gender</option>
-              <option value="Executive">Male</option>
-              <option value="Old Member">Female</option>
+              <option value="male">Male</option>
+              <option value="female">Female</option>
             </select>
-            </div>
-            <div className="form-group">
+          </div>
+
+          <div className="form-group">
             <label className="label">Date</label>
             <input
               className="label-input"
               type="date"
-              name="role"
-              value={formData.role}
+              name="date"
+              value={formData.date}
               onChange={handleChange}
               required
             />
           </div>
-          <div className="form-group-2">
-          <h3>Group</h3>
-          <p>No group added yet</p>
-          <button>Choose group</button>
+
+          <div className="form-group">
+            <label className="label">Resident Address</label>
+            <input
+              className="label-input"
+              type="text"
+              name="address"
+              placeholder="Address"
+              value={formData.address}
+              onChange={handleChange}
+              required
+            />
           </div>
+
+          <div className="form-group">
+            <label className="label">Sub Ministry of Member</label>
+            <select
+              className="label-input"
+              name="group"
+              value={formData.group}
+              onChange={handleChange}
+              required
+            >
+              <option value="">Sub Ministry</option>
+              <option value="intercessory-warriors">
+                Intercessory Warriors
+              </option>
+              <option value="evangelism">Evangelism and Outreach Team</option>
+              <option value="multi-media">Multi Media Department</option>
+              <option value="victorious-voices">Victorious Voices</option>
+              <option value="protocol">Protocol Team</option>
+              <option value="executives">Executives</option>
+              <option value="leaders">Leaders</option>
+              <option value="congregation">Congregation</option>
+              <option value="royals-of-heaven">Royals Of Heaven</option>
+            </select>
+          </div>
+
           <button type="submit" className="submit-button">
             Save Information
           </button>
         </form>
+
         <div className="form-group-pic">
           <label>Profile Picture</label>
           <input type="file" accept="image/*" onChange={handleImageChange} />
@@ -151,4 +213,4 @@ const Addmembers = () => {
   );
 };
 
-export default Addmembers;
+export default AddMembers;
