@@ -9,7 +9,9 @@ import { InputIcon } from 'primereact/inputicon';
 import { MultiSelect } from 'primereact/multiselect';
 import { Dropdown } from 'primereact/dropdown';
 import { Tag } from 'primereact/tag';
+import representativeBodyTemplate from '../component/representativeBodyTemplate';
 import { CustomerService } from './service/CustomerService';
+
 
 export default function BasicDemo() {
     const [customers, setCustomers] = useState(null);
@@ -68,16 +70,7 @@ export default function BasicDemo() {
         );
     };
 
-    const representativeBodyTemplate = (rowData) => {
-        const representative = rowData.representative;
-
-        return (
-            <div className="flex align-items-center gap-2">
-                <img alt={representative.name} src={`https://primefaces.org/cdn/primereact/images/avatar/${representative.image}`} width="32" />
-                <span>{representative.name}</span>
-            </div>
-        );
-    };
+    
 
     const representativeFilterTemplate = (options) => {
         return <MultiSelect value={options.value} options={representatives} itemTemplate={representativesItemTemplate} onChange={(e) => options.filterCallback(e.value)} optionLabel="name" placeholder="Any" className="p-column-filter" />;
