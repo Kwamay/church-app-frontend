@@ -8,6 +8,7 @@
 
 body{
   margin: 0;
+  overflow-x: hidden;
 }
 .app-content {
   width: 100%;
@@ -118,8 +119,8 @@ body{
 }
 
 .image-preview img {
-  width: 150px;
-  height: 150px;
+  width: 250px;
+  height: 250px;
   object-fit: cover;
   border-radius: 8px;
   margin-top: 10px;

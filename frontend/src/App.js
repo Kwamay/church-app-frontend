@@ -9,6 +9,7 @@ import Dashboard from "./pages/Dashboard";
 import Members from "./pages/Members";
 import AddMembers from "./pages/Addmembers";
 import Groups from "./pages/Groups";
+import Comment from "./pages/Comment";
 import "./css/app.css";
 
 function App() {
@@ -29,6 +30,7 @@ function App() {
         <Route path="/members" element={<Members />} />
         <Route path="/addmembers" element={<AddMembers />} />
         <Route path="/groups" element={<Groups />} />
+        <Route path="/comment" element={<Comment />} />
       </Routes>
     </div>
     </div>

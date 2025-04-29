@@ -1,5 +1,7 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
+import { registerUser } from "../redaux/actions/action";
+import { useDispatch } from "react-redux";
 
 // import google from "../images/google.png";
 // import facebook from "../images/facebook.png";
@@ -9,36 +11,41 @@ import "../css/signup.css";
 
 const SignUpPage = () => {
   // State variables for form fields
-  const [firstname, setFirstname] = useState("");
-  const [lastname, setLastname] = useState("");
+  const [first_name, setFirstname] = useState("");
+  const [last_name, setLastname] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [error, setError] = useState('');
+  const [success, setSuccess] = useState('');
+
+  const dispatch = useDispatch();
 
   // Function to handle form submission
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
+    setError('');
+    setSuccess('');
+
+    try {
+      await dispatch(registerUser({ first_name, last_name, email, password }));
+      setSuccess("Registration successful! You can now log in.");
+      setFirstname("");
+      setLastname("");
+      setEmail("");
+      setPassword("");
+    } catch (err) {
+      setError("Registration failed");
+    }
   };
 
   return (
     <div>
       <section className="signup-page">
+      {error && <p style={{ color: 'red' }}>{error}</p>}
+      {success && <p style={{ color: 'green' }}>{success}</p>}
         <div className="rectangle-shape">
           <div className="left-rec-shape">
             <h1 className="sign-in-text">Creat Account</h1>
-            {/* <div className="social-icons">
-              <a href="https://google.com" className="icons-link">
-                <img src={google} alt="google" className="icons-image" />
-              </a>
-              <a href="https://facebook.com" className="icons-link">
-                <img src={facebook} alt="facebook" className="icons-image" />
-              </a>
-              <a href="https://github.com" className="icons-link">
-                <img src={github} alt="github" className="icons-image" />
-              </a>
-              <a href="https://linkedin.com" className="icons-link">
-                <img src={linkedin} alt="linkedin" className="icons-image" />
-              </a>
-            </div> */}
             <p className="left-small-text">or use your email for registration</p>
             <form onSubmit={handleSubmit}>
               <div>
@@ -46,7 +53,7 @@ const SignUpPage = () => {
                   type="name"
                   id="name"
                   placeholder="First Name"
-                  value={firstname}
+                  value={first_name}
                   onChange={(e) => setFirstname(e.target.value)}
                 />
               </div>
@@ -55,7 +62,7 @@ const SignUpPage = () => {
                   type="name"
                   id="name"
                   placeholder="Last Name"
-                  value={lastname}
+                  value={last_name}
                   onChange={(e) => setLastname(e.target.value)}
                 />
               </div>
@@ -78,9 +85,9 @@ const SignUpPage = () => {
                 />
               </div>
               <div className="left-btn-container">
-                <Link type="submit" to="/signup" className="l-sign-in-btn">
+                <button type="submit" to="/signup" className="l-sign-in-btn">
                   Sign Up
-                </Link>
+                </button>
               </div>
             </form>
           </div>

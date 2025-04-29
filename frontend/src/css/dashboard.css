@@ -103,11 +103,12 @@
 .second-dashbord-btn {
   border-radius: 33px;
   border-style: none;
-  padding: 8px 20px;
+  text-decoration: none;
+  text-align: center;
+  padding: 14px 20px;
   background-color: whitesmoke;
   font-size: 15px;
   cursor: pointer; 
   font-weight: 600;
   color: black;
-
 }
