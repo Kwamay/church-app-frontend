@@ -12,6 +12,7 @@ export const createMember = createAsyncThunk(
         surname,
         email,
         phone_number,
+        year_joined,
         membership,
         gender,
         marital_status,
@@ -26,6 +27,7 @@ export const createMember = createAsyncThunk(
       memberData.append("surname", surname);
       memberData.append("email", email);
       memberData.append("phone_number", phone_number);
+      memberData.append("year_joined", year_joined);
       memberData.append("membership", membership);
       memberData.append("gender", gender);
       memberData.append("marital_status", marital_status);
@@ -86,6 +88,7 @@ export const updateMember = createAsyncThunk(
       surname,
       email,
       phone_number,
+      year_joined,
       membership,
       marital_status,
       gender,
@@ -102,6 +105,7 @@ export const updateMember = createAsyncThunk(
       formData.append("surname", surname);
       formData.append("email", email);
       formData.append("phone_number", phone_number);
+      formData.append("year_joined", year_joined);
       formData.append("membership", membership);
       formData.append("marital_status", marital_status);
       formData.append("gender", gender);

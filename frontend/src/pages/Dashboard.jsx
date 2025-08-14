@@ -31,7 +31,7 @@ const Dashboard = () => {
         This is where you can view your important information and statistics.
       </p>
 
-      <div className="grid mb-4"> {/* Added margin-bottom */}
+      <div className="flex mb-4"> {/* Added margin-bottom */}
         {/* Membership Size Card */}
         <div className="col-12 md:col-6 lg:col-3">
           {/* Added h-full for consistent height if needed, adjust based on layout */}
