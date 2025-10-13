@@ -34,6 +34,7 @@ export default function MembersTable() {
   const [editDialog, setEditDialog] = useState(false);
   const [editedMember, setEditedMember] = useState(null);
   const [deleteDialog, setDeleteDialog] = useState(false);
+  console.log("edited Member", editedMember);
 
   const viewMember = (member) => {
     setSelectedMember(member);
@@ -146,6 +147,15 @@ export default function MembersTable() {
     }));
   };
 
+    const subMinistryBodyTemplate = (rowData) => {
+    if (!rowData.sub_ministry || rowData.sub_ministry.length === 0) {
+      return <Tag value="None" severity="info" />; 
+    }
+
+
+    return rowData.sub_ministry.join(", ");
+  };
+
   return (
     <div className="card">
       <DataTable
@@ -209,13 +219,14 @@ export default function MembersTable() {
           filterPlaceholder="Search"
           style={{ width: "12%" }}
         />
-        <Column
+         <Column
           field="sub_ministry"
           header="Sub-Ministry"
           sortable
+          body={subMinistryBodyTemplate}
           filter
           filterPlaceholder="Search"
-          style={{ minWidth: "180px", width: "12%" }}
+          style={{ minWidth: "180px", width: "14%" }}
         />
         <Column
           header="Actions"
@@ -548,15 +559,20 @@ export default function MembersTable() {
               <label className="font-semibold text-gray-700 mb-3 w-full md:w-32">
                 Sub Ministry
               </label>
+
               <Select
                 options={subMinistryOptions}
-                value={subMinistryOptions.find(
-                  (option) => option.value === editedMember.sub_ministry
+                // ✅ Match array of selected options
+                value={subMinistryOptions.filter((option) =>
+                  editedMember.sub_ministry?.includes(option.value)
                 )}
-                onChange={(selectedOption) =>
+                // ✅ Save array of selected values
+                onChange={(selectedOptions) =>
                   setEditedMember({
                     ...editedMember,
-                    sub_ministry: selectedOption ? selectedOption.value : [],
+                    sub_ministry: selectedOptions
+                      ? selectedOptions.map((option) => option.value)
+                      : [],
                   })
                 }
                 placeholder="Select Sub Ministry"

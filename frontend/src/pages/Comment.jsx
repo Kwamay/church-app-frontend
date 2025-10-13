@@ -1,18 +1,18 @@
-import { useState } from "react";
+// import { useState } from "react";
 
 const Comment = () => {
  //   const [textColor, setTextColor] = useState("black");
-    const [count, setCount] = useState(0);
+    // const [count, setCount] = useState(0);
 
-    const increase = () => {
-        setCount(count + 1);
-    }
-    const decrease = () => {
-        setCount(count - 1);
-    }
-    const setToZero = () => {
-        setCount(0);
-    }
+    // const increase = () => {
+    //     setCount(count + 1);
+    // }
+    // const decrease = () => {
+    //     setCount(count - 1);
+    // }
+    // const setToZero = () => {
+    //     setCount(0);
+    // }
 
   const asamb = [
     {name: 'kenneth', location: 'ghana', car: 'audi', kids: 0, hobby: 'video game'},
@@ -25,8 +25,13 @@ const Comment = () => {
     {name: 'lindsey', location: 'usa', car: 'corolla', kids: 2, hobby: 'reading'},
 ];
 
- let words = asamb.filter(() => asamb.location > 5)
- console.log(words);
+  let words = asamb.filter((word) => word.location !== 'usa' && word.hobby !== 'video game'); 
+  console.log(words);
+
+const age = [11, 24, 9, 32, 81, 23];
+const result = age.filter((num) => num > 18);
+
+console.log(result);
 
 // let locationUsa = [];
 
@@ -56,7 +61,7 @@ const Comment = () => {
 
     return (
         <div >
-            <button
+         {/*   <button
             onClick={() => {
 setTextColor(textColor === "black" ? "red" : "black");
             }}
@@ -66,7 +71,7 @@ setTextColor(textColor === "black" ? "red" : "black");
             <h1 style={{color: textColor}}> HI MY NAME IS KENNETH</h1> 
             <button onClick={increase}>Increase</button>
             <button onClick={decrease}>Decrease</button>
-            <button onClick={setToZero}>Set to Zero</button>
+            <button onClick={setToZero}>Set to Zero</button> */}
         </div>
     );
 };

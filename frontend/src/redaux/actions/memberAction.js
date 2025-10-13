@@ -33,7 +33,7 @@ export const createMember = createAsyncThunk(
       memberData.append("marital_status", marital_status);
       memberData.append("date", date);
       memberData.append("resident_address", resident_address);
-      memberData.append("sub_ministry", sub_ministry);
+      memberData.append("sub_ministry", JSON.stringify(sub_ministry));
 
       if (profilePicture) {
         memberData.append("profile_picture", profilePicture);
@@ -111,7 +111,9 @@ export const updateMember = createAsyncThunk(
       formData.append("gender", gender);
       formData.append("date", date);
       formData.append("resident_address", resident_address);
-      formData.append("sub_ministry", sub_ministry);
+      formData.append("sub_ministry", JSON.stringify(sub_ministry));
+      console.log('From Date', formData);
+
 
       if (profile_picture instanceof File) {
         formData.append("profile_picture", profile_picture);

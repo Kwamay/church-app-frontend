@@ -22,6 +22,11 @@ const books = [
     },
   ];
 
+  let autors = books.map(book => book.author);
+  console.log(autors);
+
+
+
   const Groups = () => {
     return (
         <div>
