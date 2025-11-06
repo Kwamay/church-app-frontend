@@ -54,6 +54,7 @@ const SignUpPage = () => {
                   id="name"
                   placeholder="First Name"
                   value={first_name}
+                  required
                   onChange={(e) => setFirstname(e.target.value)}
                 />
               </div>
@@ -63,6 +64,7 @@ const SignUpPage = () => {
                   id="name"
                   placeholder="Last Name"
                   value={last_name}
+                  required
                   onChange={(e) => setLastname(e.target.value)}
                 />
               </div>
@@ -72,6 +74,7 @@ const SignUpPage = () => {
                   id="email"
                   placeholder="Email"
                   value={email}
+                  required
                   onChange={(e) => setEmail(e.target.value)}
                 />
               </div>
@@ -81,6 +84,7 @@ const SignUpPage = () => {
                   id="password"
                   placeholder="Password"
                   value={password}
+                  required
                   onChange={(e) => setPassword(e.target.value)}
                 />
               </div>
@@ -97,7 +101,7 @@ const SignUpPage = () => {
             <p className="r-small-text">
               Enter your personal account to access the website app
             </p>
-            <Link to="/" className="r-sign-up-btn">
+            <Link to="/signin" className="r-sign-up-btn">
               Sign In
             </Link>
           </div>

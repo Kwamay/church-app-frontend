@@ -6,15 +6,28 @@ import {
   FaLayerGroup,
   FaCommentAlt,
   FaShoppingBag,
+  FaSignOutAlt,
   FaThList,
 } from "react-icons/fa";
 import chLogo from "../images/ch-logo.png";
-import { NavLink, Outlet } from "react-router-dom";
+import { NavLink, Outlet, useNavigate } from "react-router-dom";
 import "../css/sidebar.css";
+import { useDispatch, useSelector } from "react-redux";
+import { logout } from "../redaux/slices/authSlice";
 
 const Sidebar = ({ children }) => {
   const [isOpen, setIsOpen] = useState(false);
   const toggle = () => setIsOpen(!isOpen);
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+
+  const user = useSelector((state) => state.auth.user);
+
+  const handleLogout = () => {
+    dispatch(logout());
+    navigate("/signin");
+  };
+
   const menuItem = [
     {
       path: "/dashboard",
@@ -61,6 +74,13 @@ const Sidebar = ({ children }) => {
             <FaBars onClick={toggle} />
           </div>
         </div>
+        {isOpen && user && (
+          <div className="user-info">
+            <p className="user-name">
+              {user.name || user.username || user.email}
+            </p>
+          </div>
+        )}
         {menuItem.map((item, index) => (
           <NavLink
             to={item.path}
@@ -77,7 +97,13 @@ const Sidebar = ({ children }) => {
             </div>
           </NavLink>
         ))}
-      </div>
+        <div className="logout-section">
+          <button className="logout-btn" onClick={handleLogout}>
+            <FaSignOutAlt />
+            {isOpen && <span style={{ marginLeft: "10px" }}>Logout</span>}
+          </button>
+        </div>
+        </div>
       <main>{children}</main>
       <Outlet />
     </div>

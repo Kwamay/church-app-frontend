@@ -9,13 +9,14 @@ function Signin() {
   const [password, setPassword] = useState("");
   
   const dispatch = useDispatch();
-  const navigate = useNavigate(); // Initialize navigate function
+  const navigate = useNavigate();
 
   const handleSubmit = (e) => {
     e.preventDefault();
     dispatch(loginUser({ email, password })).then((response) => {
-      if (response.payload.data.token) {  // Ensure login is successful
-        navigate("/dashboard"); // Redirect to Dashboard
+      if (response.payload.data.token) {
+        localStorage.setItem("token", response.payload.token);
+        navigate("/dashboard");
       }
     });
 
@@ -37,6 +38,7 @@ function Signin() {
                   id="email"
                   placeholder="Email"
                   value={email}
+                  required
                   onChange={(e) => setEmail(e.target.value)}
                 />
               </div>
@@ -46,6 +48,7 @@ function Signin() {
                   id="password"
                   placeholder="Password"
                   value={password}
+                  required
                   onChange={(e) => setPassword(e.target.value)}
                 />
               </div>
