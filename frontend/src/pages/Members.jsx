@@ -17,13 +17,14 @@ import {
 import Select from "react-select";
 import "primeicons/primeicons.css";
 
-export default function MembersTable() {
+
+export default function MembersTable() {  
   const dispatch = useDispatch();
   const { members } = useSelector((state) => state.members);
 
   useEffect(() => {
     dispatch(getAllMember());
-  }, [dispatch]);
+  }, [dispatch]); 
 
   const [filters, setFilters] = useState({
     global: { value: null, matchMode: FilterMatchMode.CONTAINS },
@@ -34,7 +35,6 @@ export default function MembersTable() {
   const [editDialog, setEditDialog] = useState(false);
   const [editedMember, setEditedMember] = useState(null);
   const [deleteDialog, setDeleteDialog] = useState(false);
-  console.log("edited Member", editedMember);
 
   const viewMember = (member) => {
     setSelectedMember(member);

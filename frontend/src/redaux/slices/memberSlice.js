@@ -10,7 +10,7 @@ import {
 const initialState = {
   members: [],
   member: null,
-  status: "idle", // "idle" | "loading" | "succeeded" | "failed"
+  status: "loading", // "idle" | "loading" | "succeeded" | "failed"
   error: null,
 };
 
@@ -54,6 +54,7 @@ const memberSlice = createSlice({
       .addCase(getAllMember.fulfilled, (state, action) => {
         state.status = "succeeded";
         state.members = action.payload;
+        
       })
       .addCase(getAllMember.rejected, (state, action) => {
         state.status = "failed";

@@ -70,8 +70,10 @@ export const getAllMember = createAsyncThunk(
   "member/getAll",
   async (_, { rejectWithValue }) => {
     try {
-      const response = await axios.get("members/"); 
+      const response = await axios.get("members/");
+
       return response.data;
+      
     } catch (error) {
       return rejectWithValue(error.response?.data || "Error fetching members");
     }

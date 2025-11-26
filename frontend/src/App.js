@@ -1,10 +1,11 @@
-import React, {useEffect} from "react";
+import React, { useEffect } from "react";
 import {
   BrowserRouter as Router,
   Routes,
   Route,
   useLocation,
 } from "react-router-dom";
+
 import Signup from "./component/Signup";
 import Signin from "./component/Signin";
 import ForgotPassword from "./component/ForgotPassword";
@@ -16,19 +17,30 @@ import AddMembers from "./pages/Addmembers";
 import Comment from "./pages/Comment";
 import Landingpage from "./pages/landingpage/Landingpage";
 import ProtectedRoute from "./component/ProtectedRoute";
+import NotFound from "./component/NotFounfd";
+import GuestRoute from "./component/GuestRoute";
+import AdminProtectedRoute from "./component/AdminProtectedRoute";
+
 import "./css/app.css";
 import { useDispatch } from "react-redux";
 import { logout } from "./redaux/slices/authSlice";
 
 function App() {
   const location = useLocation();
-  const hideSidebarPaths = ["/", "/signin", "/signup", "/forgot-password"];
+  const dispatch = useDispatch();
 
-const dispatch = useDispatch();
+  // SHOW SIDEBAR ONLY ON INTERNAL LOGGED-IN ROUTES
+  const sidebarVisiblePaths = [
+    "/dashboard",
+    "/members",
+    "/addmembers",
+    "/comment",
+  ];
 
+  // Check for token expiration
   useEffect(() => {
     const checkTokenExpiry = () => {
-      const expiry = localStorage.getItem('tokenExpiry');
+      const expiry = localStorage.getItem("tokenExpiry");
       if (expiry && new Date().getTime() > expiry) {
         dispatch(logout());
         alert("Session expired! Please log in again.");
@@ -36,27 +48,48 @@ const dispatch = useDispatch();
     };
 
     checkTokenExpiry();
-    const interval = setInterval(checkTokenExpiry, 60 * 1000);
+    const interval = setInterval(checkTokenExpiry, 60000);
     return () => clearInterval(interval);
   }, [dispatch]);
 
   return (
     <div className="app-container">
-      <div>{!hideSidebarPaths.includes(location.pathname) && <Sidebar />}</div>
+      {/* Sidebar only shows on selected paths */}
+      {sidebarVisiblePaths.includes(location.pathname) && <Sidebar />}
+
       <div className="app-content">
         <Routes>
+          {/* Public pages */}
           <Route path="/" element={<Landingpage />} />
-          <Route path="/signin" element={<Signin />} />
+          <Route
+            path="/signin"
+            element={
+              <GuestRoute>
+                <Signin />
+              </GuestRoute>
+            }
+          />
+
+          <Route
+            path="/signup"
+            element={
+              <GuestRoute>
+                <Signup />
+              </GuestRoute>
+            }
+          />
           <Route path="/forgot-password" element={<ForgotPassword />} />
-          <Route path="/signup" element={<Signup />} />
+
+          {/* Protected pages */}
           <Route
             path="/dashboard"
             element={
-              <ProtectedRoute>
+              <AdminProtectedRoute>
                 <Dashboard />
-              </ProtectedRoute>
+              </AdminProtectedRoute>
             }
           />
+
           <Route
             path="/members"
             element={
@@ -65,6 +98,7 @@ const dispatch = useDispatch();
               </ProtectedRoute>
             }
           />
+
           <Route
             path="/addmembers"
             element={
@@ -73,13 +107,18 @@ const dispatch = useDispatch();
               </ProtectedRoute>
             }
           />
-          <Route 
-          path="/comment" 
-          element={
-          <ProtectedRoute>
-          <Comment />
-          </ProtectedRoute>
-          } />
+
+          <Route
+            path="/comment"
+            element={
+              <ProtectedRoute>
+                <Comment />
+              </ProtectedRoute>
+            }
+          />
+
+          {/* 404 Page */}
+          <Route path="*" element={<NotFound />} />
         </Routes>
       </div>
     </div>

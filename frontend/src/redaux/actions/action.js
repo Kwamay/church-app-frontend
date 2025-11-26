@@ -1,24 +1,23 @@
-// src/redux/asyncActions/authActions.js
+// src/redux/actions/action.js
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import axios from "../api/login";
 
-// Login action
+// ---------------------- LOGIN ----------------------
 export const loginUser = createAsyncThunk(
   "auth/loginUser",
   async ({ email, password }, { rejectWithValue }) => {
     try {
       const response = await axios.post("login/", { email, password });
-      if (response.data.token) {
-        localStorage.setItem("token", response.data.token);
-      }
-      return response.data;
+      console.log(response);
+      
+      return response.data.data; // your slice handles storage
     } catch (error) {
-      return rejectWithValue(error.response?.data || "Something went wrong");
+      return rejectWithValue(error.response?.data || "Login failed");
     }
   }
 );
 
-// Register action
+// ---------------------- REGISTER ----------------------
 export const registerUser = createAsyncThunk(
   "auth/registerUser",
   async ({ first_name, last_name, password, email }, { rejectWithValue }) => {
@@ -31,7 +30,33 @@ export const registerUser = createAsyncThunk(
       });
       return response.data;
     } catch (error) {
-      return rejectWithValue(error.response?.data || "Something went wrong");
+      return rejectWithValue(error.response?.data || "Registration failed");
+    }
+  }
+);
+
+// ---------------------- LOGOUT ----------------------
+export const logoutUser = createAsyncThunk(
+  "auth/logoutUser",
+  async (_, { rejectWithValue }) => {
+    try {
+      const token = localStorage.getItem("accessToken");
+
+      // Call backend logout if token exists
+      const response = await axios.get(
+        "logout/",
+        {},
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
+
+      return response.data;
+    } catch (error) {
+      // Even if server logout fails → still logout locally
+      return rejectWithValue(error.response?.data || "Logout failed");
     }
   }
 );

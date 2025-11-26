@@ -10,15 +10,14 @@ const Dashboard = () => {
 
   const {
     members,
-    loading: membersLoading,
+    status, 
     error: membersError,
-  } = useSelector((state) => state.members); // Renamed loading/error to avoid conflicts if other state slices are added
+  } = useSelector((state) => state.members);
 
   useEffect(() => {
-    if ((!members || members.length === 0) && !membersLoading) {
-      dispatch(getAllMember());
-    }
-  }, [dispatch, members, membersLoading]);
+    console.log("Fetching members..."); 
+    dispatch(getAllMember());
+  }, [dispatch]);
 
   const memberCount = members ? members.length : 0;
 
@@ -28,43 +27,36 @@ const Dashboard = () => {
       <p className="mb-4">
         This is where you can view your important information and statistics.
       </p>
+
       <div className="grid grid-col-1 md:grid md:grid-col-2 lg:flex lg:flex-row">
         {/* Membership Size Card */}
         <div className="col-12 md:col-6 lg:col-3">
           <div className="surface-0 shadow-2 p-3 border-1 border-50 border-round h-full flex flex-column justify-content-between">
             <div>
-              {" "}
-              {/* Content wrapper */}
               <div className="flex justify-content-between mb-3">
                 <div>
                   <span className="block text-500 font-medium mb-3">
                     Church Membership Size
                   </span>
-                  {/* --- Dynamic Count Display --- */}
+
                   <div className="text-900 font-medium text-xl">
-                    {membersLoading ? (
+                    {status === "loading" ? (
                       <i
                         className="pi pi-spin pi-spinner"
                         style={{ fontSize: "1.5rem" }}
                       ></i>
                     ) : membersError ? (
-                      <span
-                        className="text-red-500"
-                        title={membersError.message || "Failed to load"}
-                      >
-                        Error
-                      </span> // Show tooltip on error
+                      <span className="text-red-500">Error</span>
                     ) : (
-                      memberCount // Display the actual count
+                      memberCount
                     )}
                   </div>
-                  {/* --- End Dynamic Count Display --- */}
                 </div>
+
                 <div
                   className="flex align-items-center justify-content-center bg-blue-100 border-round"
                   style={{ width: "2.5rem", height: "2.5rem" }}
                 >
-                  {/* Changed icon to pi-users */}
                   <i className="pi pi-users text-blue-500 text-xl"></i>
                 </div>
               </div>
@@ -72,7 +64,7 @@ const Dashboard = () => {
           </div>
         </div>
 
-        {/* Revenue Card (Static) */}
+        {/* Static cards */}
         <div className="col-12 md:col-6 lg:col-3">
           <div className="surface-0 shadow-2 p-3 border-1 border-50 border-round h-full flex flex-column justify-content-between">
             <div>
@@ -94,17 +86,18 @@ const Dashboard = () => {
           </div>
         </div>
 
-        {/* Customers Card (Static) */}
+        {/* More static cards */}
         <div className="col-12 md:col-6 lg:col-3">
           <div className="surface-0 shadow-2 p-3 border-1 border-50 border-round h-full flex flex-column justify-content-between">
             <div>
               <div className="flex justify-content-between mb-3">
                 <div>
                   <span className="block text-500 font-medium mb-3">
-                    Customers {/* Consider renaming if not applicable */}
+                    Customers
                   </span>
                   <div className="text-900 font-medium text-xl">28441</div>
                 </div>
+
                 <div
                   className="flex align-items-center justify-content-center bg-cyan-100 border-round"
                   style={{ width: "2.5rem", height: "2.5rem" }}
@@ -116,17 +109,18 @@ const Dashboard = () => {
           </div>
         </div>
 
-        {/* Comments Card (Static) */}
+        {/* Comments */}
         <div className="col-12 md:col-6 lg:col-3">
           <div className="surface-0 shadow-2 p-3 border-1 border-50 border-round h-full flex flex-column justify-content-between">
             <div>
               <div className="flex justify-content-between mb-3">
                 <div>
                   <span className="block text-500 font-medium mb-3">
-                    Comments {/* Consider renaming */}
+                    Comments
                   </span>
                   <div className="text-900 font-medium text-xl">152 Unread</div>
                 </div>
+
                 <div
                   className="flex align-items-center justify-content-center bg-purple-100 border-round"
                   style={{ width: "2.5rem", height: "2.5rem" }}
@@ -135,52 +129,50 @@ const Dashboard = () => {
                 </div>
               </div>
             </div>
-            {/* Consider using PrimeReact Button component for consistency */}
+
             <div className="flex justify-content-between align-items-center">
-              <span className="text-green-500 font-medium">85 </span>
+              <span className="text-green-500 font-medium">85</span>
               <button
                 className="p-button p-button-sm p-button-raised p-button-info"
-                style={{ padding: "0.3rem 0.6rem" }} 
+                style={{ padding: "0.3rem 0.6rem" }}
               >
                 Buy SMS
               </button>
             </div>
           </div>
         </div>
-      </div>{" "}
-      {/* End Grid */}
-      {/* Quick Actions Section */}
+      </div>
+
+      {/* Quick Actions */}
       <div className="second-field-section mb-4">
-        {" "}
-        {/* Added margin-bottom */}
-        <p className="text-lg font-medium mb-3">Quick Actions</p>{" "}
-        {/* Improved styling */}
+        <p className="text-lg font-medium mb-3">Quick Actions</p>
+
         <div className="flex flex-wrap gap-6">
-          {" "}
-          {/* Use flexbox for better button layout */}
           <Link
             className="second-dashbord-btn p-button p-button-raised p-button-secondary"
             to="/addmembers"
           >
-            {" "}
-            {/* Added PrimeReact classes */}
             Add Member
           </Link>
-          {/* Apply consistent styling to other buttons */}
+
           <button className="second-dashbord-btn p-button p-button-raised p-button-secondary">
             Send SMS
           </button>
+
           <button className="second-dashbord-btn p-button p-button-raised p-button-secondary">
             Add First Timer
           </button>
+
           <button className="second-dashbord-btn p-button p-button-raised p-button-secondary">
             Record Offering
           </button>
+
           <button className="second-dashbord-btn p-button p-button-raised p-button-secondary">
             Record Expenses
           </button>
         </div>
       </div>
+
       <div className="mt-5">
         <BirthdayReminder />
       </div>

@@ -7,7 +7,6 @@ import {
 } from "lucide-react";
 import chLogo from "../../images/ch-logo.png";
 import theme from "../../images/theme.jpg";
-import { Link } from "react-router-dom";
 import AboutSection from "./AboutSection";
 import ServiceSection from "./ServiceSection";
 import ExpectationSection from "./ExpectationSection.jsx";
@@ -16,6 +15,7 @@ import FooterSection from "./FooterSection.jsx";
 
 function Landingpage() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  
  
   return (
     <div className="min-h-screen bg-white">
@@ -65,9 +65,7 @@ function Landingpage() {
               >
                 Contact
               </a>
-              <Link to='/signin' className="bg-gradient-to-r from-amber-500 to-amber-600 text-white px-6 py-2.5 rounded-full hover:from-amber-600 hover:to-amber-700 transition-all hover:shadow-xl font-semibold">
-                Admin Panel
-              </Link>
+              
             </div>
 
             <button

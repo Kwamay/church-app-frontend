@@ -77,10 +77,10 @@ export default function BirthdayReminder() {
   const [currentMonthName, setCurrentMonthName] = useState("");
 
   useEffect(() => {
-    if ((!members || members.length === 0) && !membersLoading) {
+    
       dispatch(getAllMember());
-    }
-  }, [dispatch, members, membersLoading]);
+    
+  }, [dispatch]);
 
   useEffect(() => {
     if (members && members.length > 0) {
