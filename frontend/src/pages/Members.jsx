@@ -147,19 +147,58 @@ export default function MembersTable() {
     }));
   };
 
-    const subMinistryBodyTemplate = (rowData) => {
-    if (!rowData.sub_ministry || rowData.sub_ministry.length === 0) {
-      return <Tag value="None" severity="info" />; 
-    }
+  const Detail = ({ label, value }) => (
+    <p className="text-gray-700 flex flex-col">
+      <span className="text-sm text-gray-500">{label}</span>
+      <span className="font-medium text-gray-900">{value || "—"}</span>
+    </p>
+  );
 
+  const subMinistryBodyTemplate = (rowData) => {
+    if (!rowData.sub_ministry || rowData.sub_ministry.length === 0) {
+      return <Tag value="None" severity="info" />;
+    }
 
     return rowData.sub_ministry.join(", ");
   };
 
+  const InputField = ({ label, value, onChange, type = "text", span = 1 }) => (
+  <div className={`flex flex-col ${span === 2 ? "md:col-span-2" : ""}`}>
+    <label className="font-semibold text-gray-700 mb-1">{label}</label>
+    <input
+      type={type}
+      value={value}
+      onChange={onChange}
+      className="p-3 border border-gray-300 rounded-xl shadow-sm 
+                 focus:outline-none focus:ring-2 focus:ring-blue-500 transition"
+    />
+  </div>
+);
+
+const SelectField = ({ label, value, onChange, options }) => (
+  <div className="flex flex-col">
+    <label className="font-semibold text-gray-700 mb-1">{label}</label>
+    <select
+      value={value}
+      onChange={onChange}
+      className="p-3 border border-gray-300 rounded-xl shadow-sm 
+                 focus:outline-none focus:ring-2 focus:ring-blue-500 transition"
+    >
+      <option value="">Select {label}</option>
+      {options.map((opt, i) => (
+        <option key={i} value={opt}>
+          {opt}
+        </option>
+      ))}
+    </select>
+  </div>
+);
+
+
   return (
     <div className="card">
       <DataTable
-        value={members}
+        value={[...members].reverse()}
         paginator
         rows={10}
         header={
@@ -219,7 +258,7 @@ export default function MembersTable() {
           filterPlaceholder="Search"
           style={{ width: "12%" }}
         />
-         <Column
+        <Column
           field="sub_ministry"
           header="Sub-Ministry"
           sortable
@@ -240,71 +279,75 @@ export default function MembersTable() {
         visible={viewDialog}
         onHide={hideDialog}
         header="Member Details"
-        className="w-[60vw] rounded-xl shadow-2xl p-6"
+        className="w-[55vw] rounded-2xl shadow-xl bg-white"
       >
         {selectedMember && (
-          <div className="bg-white rounded-xl shadow-md p-6">
-            {/* Profile Image & Name */}
-            <div className="flex flex-col items-center border-b pb-6 mb-6">
-              <img
-                src={
-                  selectedMember.profile_picture ||
-                  "https://via.placeholder.com/100"
-                }
-                alt="Profile"
-                className="w-[50rem] h-[40rem] rounded-[5rem] object-cover border-4 border-gray-300 shadow-lg"
-              />
-            </div>
+          <div className="p-6 space-y-8">
+            {/* === Profile Section === */}
+            <div className="flex flex-col items-center">
+              <div className="relative">
+                <img
+                  src={
+                    selectedMember.profile_picture ||
+                    "https://via.placeholder.com/150"
+                  }
+                  alt="Profile"
+                  className="w-80 h-80 rounded-full object-cover border-4 border-blue-200 shadow-lg"
+                />
 
-            {/* Member Information */}
-            <div className="grid grid-cols-2 gap-x-8 gap-y-4 text-gray-700">
-              <h2 className="col-span-2 text-2xl font-bold text-gray-900 mb-4 text-center">
+                {/* Glow Effect */}
+                <div className="absolute inset-0 rounded-full shadow-[0_0_25px_5px_rgba(79,70,229,0.25)]"></div>
+              </div>
+
+              {/* Name */}
+              <h2 className="mt-4 text-3xl font-bold text-gray-900">
                 {selectedMember.first_name} {selectedMember.surname}
               </h2>
+              <p className="text-gray-500 text-sm">Member Information</p>
+            </div>
 
-              <p>
-                <strong className="text-gray-600">📧 Email:</strong>{" "}
-                {selectedMember.email}
-              </p>
-              <p>
-                <strong className="text-gray-600">📞 Phone:</strong>{" "}
-                {selectedMember.phone_number}
-              </p>
-              <p>
-                <strong className="text-gray-600">
-                  🆔 Year of Membership:
-                </strong>{" "}
-                {selectedMember.year_joined}
-              </p>
-              <p>
-                <strong className="text-gray-600">🆔 Membership:</strong>{" "}
-                {selectedMember.membership}
-              </p>
-              <p>
-                <strong className="text-gray-600">💍 Marital Status:</strong>{" "}
-                {selectedMember.marital_status}
-              </p>
-              <p>
-                <strong className="text-gray-600">🚻 Gender:</strong>{" "}
-                {selectedMember.gender}
-              </p>
-              <p>
-                <strong className="text-gray-600">🎂 Date of Birth:</strong>{" "}
-                {selectedMember.date}
-              </p>
-              <p className="col-span-2">
-                <strong className="text-gray-600">🏠 Address:</strong>{" "}
-                {selectedMember.resident_address}
-              </p>
-              <p className="col-span-2 flex items-center gap-2">
-                <strong className="text-gray-600">🙏 Sub Ministry:</strong>
+            {/* === Details Card === */}
+            <div className="grid grid-cols-2 gap-6 bg-gray-50 p-6 rounded-2xl shadow-inner border border-gray-200">
+              {/* Column 1 */}
+              <div className="space-y-4">
+                <Detail label="📧 Email" value={selectedMember.email} />
+                <Detail label="📞 Phone" value={selectedMember.phone_number} />
+                <Detail
+                  label="🆔 Membership Year"
+                  value={selectedMember.year_joined}
+                />
+                <Detail label="🎂 Date of Birth" value={selectedMember.date} />
+              </div>
+
+              {/* Column 2 */}
+              <div className="space-y-4">
+                <Detail
+                  label="🆔 Membership Type"
+                  value={selectedMember.membership}
+                />
+                <Detail
+                  label="💍 Marital Status"
+                  value={selectedMember.marital_status}
+                />
+                <Detail label="🚻 Gender" value={selectedMember.gender} />
+                <Detail
+                  label="🏠 Address"
+                  value={selectedMember.resident_address}
+                />
+              </div>
+
+              {/* Sub Ministries - Full Row */}
+              <div className="col-span-2 bg-white rounded-xl p-4 border shadow-sm mt-4">
+                <p className="font-semibold text-gray-700 mb-2">
+                  🙏 Sub Ministry:
+                </p>
                 <div className="flex flex-wrap gap-2">
                   {Array.isArray(selectedMember.sub_ministry) &&
                   selectedMember.sub_ministry.length > 0 ? (
                     selectedMember.sub_ministry.map((ministry, i) => (
                       <span
                         key={i}
-                        className="bg-blue-100 text-blue-800 px-2 py-1 rounded-full text-sm"
+                        className="bg-blue-100 text-blue-700 px-3 py-1 rounded-full text-sm shadow-sm"
                       >
                         {ministry}
                       </span>
@@ -313,287 +356,226 @@ export default function MembersTable() {
                     <span className="text-gray-500">None</span>
                   )}
                 </div>
-              </p>
+              </div>
             </div>
           </div>
         )}
       </Dialog>
 
-      {/* Edit Dialog */}
-      <Dialog
-        visible={editDialog}
-        onHide={() => setEditDialog(false)}
-        header="Edit Member"
-        style={{ width: "60vw", borderRadius: "10px", padding: "20px" }}
-        className="shadow-lg rounded-lg"
-      >
-        {editedMember && (
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-8 p-6 bg-white rounded-lg shadow-md">
-            <div className="flex flex-col items-center border-b pb-6 mb-6 md:col-span-2">
-              <img
-                src={
-                  editedMember.previewImage ||
-                  editedMember.profile_picture ||
-                  "https://via.placeholder.com/120"
-                }
-                alt="Profile"
-                className="w-32 h-32 rounded-full shadow-md border-4 border-gray-300 object-cover mb-4"
-                style={{ width: "20rem", height: "20rem" }}
-              />
-              <input
-                type="file"
-                accept="image/*"
-                className="mt-2 p-2 text-sm border border-gray-300 rounded-md"
-                onChange={(e) => {
-                  const file = e.target.files[0];
-                  if (file) {
-                    const imageURL = URL.createObjectURL(file);
-                    setEditedMember((prev) => ({
-                      ...prev,
-                      profile_picture: file,
-                      previewImage: imageURL,
-                    }));
-                  }
-                }}
-              />
-            </div>
+     {/* Edit Dialog */}
+<Dialog
+  visible={editDialog}
+  onHide={() => setEditDialog(false)}
+  header="Edit Member"
+  className="w-[60vw] rounded-2xl shadow-xl bg-white"
+>
 
-            {/* First Name */}
-            <div className="flex flex-col">
-              <label className="font-semibold text-gray-700 mb-3 w-full md:w-32">
-                First Name
-              </label>
-              <input
-                type="text"
-                value={editedMember.first_name}
-                onChange={(e) =>
-                  setEditedMember({
-                    ...editedMember,
-                    first_name: e.target.value,
-                  })
-                }
-                className="p-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
-              />
-            </div>
+  {editedMember && (
+    <div className="p-8 space-y-10">
 
-            {/* Surname */}
-            <div className="flex flex-col">
-              <label className="font-semibold text-gray-700 mb-3 w-full md:w-32">
-                Surname
-              </label>
-              <input
-                type="text"
-                value={editedMember.surname}
-                onChange={(e) =>
-                  setEditedMember({
-                    ...editedMember,
-                    surname: e.target.value,
-                  })
-                }
-                className="p-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
-              />
-            </div>
+      {/* === PROFILE SECTION === */}
+      <div className="flex flex-col items-center">
 
-            {/* Email */}
-            <div className="flex flex-col">
-              <label className="font-semibold text-gray-700 mb-3 w-full md:w-32">
-                Email
-              </label>
-              <input
-                type="email"
-                value={editedMember.email}
-                onChange={(e) =>
-                  setEditedMember({ ...editedMember, email: e.target.value })
-                }
-                className="p-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
-              />
-            </div>
+        {/* Profile Image */}
+        <div className="relative">
+          <img
+            src={
+              editedMember.previewImage ||
+              editedMember.profile_picture ||
+              "https://via.placeholder.com/200"
+            }
+            alt="Profile"
+            className="w-48 h-48 rounded-full object-cover border-4 border-blue-200 shadow-lg"
+          />
 
-            {/* Phone Number */}
-            <div className="flex flex-col">
-              <label className="font-semibold text-gray-700 mb-3 w-full md:w-32">
-                Phone Number
-              </label>
-              <input
-                type="text"
-                value={editedMember.phone_number}
-                onChange={(e) =>
-                  setEditedMember({
-                    ...editedMember,
-                    phone_number: e.target.value,
-                  })
-                }
-                className="p-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
-              />
-            </div>
+          {/* Glow effect */}
+          <div className="absolute inset-0 rounded-full shadow-[0_0_30px_8px_rgba(79,70,229,0.25)]"></div>
+        </div>
 
-            {/* Year of Membership */}
-            <div className="flex flex-col">
-              <label className="font-semibold text-gray-700 mb-3 w-full md:w-32">
-                Year of Membership
-              </label>
-              <select
-                value={editedMember.year_joined}
-                name="year_joined"
-                onChange={(e) =>
-                  setEditedMember({
-                    ...editedMember,
-                    year_joined: e.target.value,
-                  })
-                }
-                className="p-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
-              >
-                <option>Select Year</option>
-                {Array.from(
-                  { length: new Date().getFullYear() - 2000 + 1 },
-                  (_, i) => 2000 + i
-                ).map((year) => (
-                  <option key={year} value={year}>
-                    {year}
-                  </option>
-                ))}
-              </select>
-            </div>
+        {/* Upload */}
+        <input
+          type="file"
+          accept="image/*"
+          className="mt-4 p-2 text-sm border border-gray-300 rounded-md cursor-pointer"
+          onChange={(e) => {
+            const file = e.target.files[0];
+            if (file) {
+              const imageURL = URL.createObjectURL(file);
+              setEditedMember((prev) => ({
+                ...prev,
+                profile_picture: file,
+                previewImage: imageURL,
+              }));
+            }
+          }}
+        />
 
-            {/* Membership */}
-            <div className="flex flex-col">
-              <label className="font-semibold text-gray-700 mb-3 w-full md:w-32">
-                Membership
-              </label>
-              <select
-                value={editedMember.membership}
-                onChange={(e) =>
-                  setEditedMember({
-                    ...editedMember,
-                    membership: e.target.value,
-                  })
-                }
-                className="p-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
-              >
-                <option value="">Select Membership</option>
-                <option value="New Convert">New Convert</option>
-                <option value="Visitor">Visitor</option>
-                <option value="War Night Participant">
-                  War Night Participant
-                </option>
-                <option value="Old Member">Old Member</option>
-              </select>
-            </div>
+        {/* Name Display */}
+        <h2 className="text-3xl font-bold mt-4 text-gray-900">
+          {editedMember.first_name} {editedMember.surname}
+        </h2>
+        <p className="text-gray-500 text-sm">Edit Member Information</p>
+      </div>
 
-            {/* Marital Status */}
-            <div className="flex flex-col">
-              <label className="font-semibold text-gray-700 mb-3 w-full md:w-32">
-                Marital Status
-              </label>
-              <select
-                value={editedMember.marital_status}
-                onChange={(e) =>
-                  setEditedMember({
-                    ...editedMember,
-                    marital_status: e.target.value,
-                  })
-                }
-                className="p-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
-              >
-                <option value="">Marital Status</option>
-                <option value="Single">Single</option>
-                <option value="Engaged">Engaged</option>
-                <option value="Married">Married</option>
-                <option value="Single Parent">Single Parent</option>
-                <option value="Divorced">Divorced</option>
-              </select>
-            </div>
+      {/* === FORM CARD === */}
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-8 bg-gray-50 shadow-inner rounded-2xl p-8 border border-gray-200">
 
-            {/* Gender */}
-            <div className="flex flex-col">
-              <label className="font-semibold text-gray-700 mb-3 w-full md:w-32">
-                Gender
-              </label>
-              <select
-                value={editedMember.gender}
-                onChange={(e) =>
-                  setEditedMember({ ...editedMember, gender: e.target.value })
-                }
-                className="p-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
-              >
-                <option value="">Gender</option>
-                <option value="Male">Male</option>
-                <option value="Female">Female</option>
-              </select>
-            </div>
+        {/* FIRST NAME */}
+        <InputField
+          label="First Name"
+          value={editedMember.first_name}
+          onChange={(e) =>
+            setEditedMember({ ...editedMember, first_name: e.target.value })
+          }
+        />
 
-            {/* Date of Birth */}
-            <div className="flex flex-col">
-              <label className="font-semibold text-gray-700 mb-3 w-full md:w-32">
-                Date of Birth
-              </label>
-              <input
-                type="date"
-                value={editedMember.date}
-                onChange={(e) =>
-                  setEditedMember({ ...editedMember, date: e.target.value })
-                }
-                className="p-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
-              />
-            </div>
+        {/* SURNAME */}
+        <InputField
+          label="Surname"
+          value={editedMember.surname}
+          onChange={(e) =>
+            setEditedMember({ ...editedMember, surname: e.target.value })
+          }
+        />
 
-            {/* Address */}
-            <div className="flex flex-col">
-              <label className="font-semibold text-gray-700 mb-3 w-full md:w-32">
-                Address
-              </label>
-              <input
-                type="text"
-                value={editedMember.resident_address}
-                onChange={(e) =>
-                  setEditedMember({
-                    ...editedMember,
-                    resident_address: e.target.value,
-                  })
-                }
-                className="p-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
-              />
-            </div>
-            {/* Sub Ministry */}
-            <div className="flex flex-col md:col-span-2">
-              <label className="font-semibold text-gray-700 mb-3 w-full md:w-32">
-                Sub Ministry
-              </label>
+        {/* EMAIL */}
+        <InputField
+          label="Email"
+          type="email"
+          value={editedMember.email}
+          onChange={(e) =>
+            setEditedMember({ ...editedMember, email: e.target.value })
+          }
+        />
 
-              <Select
-                options={subMinistryOptions}
-                // ✅ Match array of selected options
-                value={subMinistryOptions.filter((option) =>
-                  editedMember.sub_ministry?.includes(option.value)
-                )}
-                // ✅ Save array of selected values
-                onChange={(selectedOptions) =>
-                  setEditedMember({
-                    ...editedMember,
-                    sub_ministry: selectedOptions
-                      ? selectedOptions.map((option) => option.value)
-                      : [],
-                  })
-                }
-                placeholder="Select Sub Ministry"
-                isClearable
-                isMulti
-                className="react-select-container"
-                classNamePrefix="react-select"
-              />
-            </div>
+        {/* PHONE NUMBER */}
+        <InputField
+          label="Phone Number"
+          value={editedMember.phone_number}
+          onChange={(e) =>
+            setEditedMember({
+              ...editedMember,
+              phone_number: e.target.value,
+            })
+          }
+        />
 
-            {/* Save Button */}
-            <div className="mt-6 col-span-2 flex justify-end">
-              <Button
-                label="Save Changes"
-                className="bg-blue-500 text-white px-6 py-2 rounded-md shadow-md hover:bg-blue-600"
-                onClick={saveChanges}
-              />
-            </div>
-          </div>
-        )}
-      </Dialog>
+        {/* YEAR JOINED */}
+        <SelectField
+          label="Year of Membership"
+          value={editedMember.year_joined}
+          options={Array.from(
+            { length: new Date().getFullYear() - 2000 + 1 },
+            (_, i) => 2000 + i
+          )}
+          onChange={(e) =>
+            setEditedMember({ ...editedMember, year_joined: e.target.value })
+          }
+        />
+
+        {/* MEMBERSHIP TYPE */}
+        <SelectField
+          label="Membership"
+          value={editedMember.membership}
+          options={[
+            "New Convert",
+            "Visitor",
+            "War Night Participant",
+            "Old Member",
+          ]}
+          onChange={(e) =>
+            setEditedMember({ ...editedMember, membership: e.target.value })
+          }
+        />
+
+        {/* MARITAL STATUS */}
+        <SelectField
+          label="Marital Status"
+          value={editedMember.marital_status}
+          options={[
+            "Single",
+            "Engaged",
+            "Married",
+            "Single Parent",
+            "Divorced",
+          ]}
+          onChange={(e) =>
+            setEditedMember({ ...editedMember, marital_status: e.target.value })
+          }
+        />
+
+        {/* GENDER */}
+        <SelectField
+          label="Gender"
+          value={editedMember.gender}
+          options={["Male", "Female"]}
+          onChange={(e) =>
+            setEditedMember({ ...editedMember, gender: e.target.value })
+          }
+        />
+
+        {/* DATE OF BIRTH */}
+        <InputField
+          label="Date of Birth"
+          type="date"
+          value={editedMember.date}
+          onChange={(e) =>
+            setEditedMember({ ...editedMember, date: e.target.value })
+          }
+        />
+
+        {/* ADDRESS FULL WIDTH */}
+        <InputField
+          label="Address"
+          value={editedMember.resident_address}
+          onChange={(e) =>
+            setEditedMember({
+              ...editedMember,
+              resident_address: e.target.value,
+            })
+          }
+          span={2}
+        />
+
+        {/* SUB MINISTRY */}
+        <div className="md:col-span-2">
+          <label className="font-semibold text-gray-700 mb-2 block">
+            Sub Ministry
+          </label>
+
+          <Select
+            options={subMinistryOptions}
+            value={subMinistryOptions.filter((option) =>
+              editedMember.sub_ministry?.includes(option.value)
+            )}
+            onChange={(selectedOptions) =>
+              setEditedMember({
+                ...editedMember,
+                sub_ministry: selectedOptions
+                  ? selectedOptions.map((option) => option.value)
+                  : [],
+              })
+            }
+            isMulti
+            isClearable
+            placeholder="Select Sub Ministries"
+            className="react-select-container"
+            classNamePrefix="react-select"
+          />
+        </div>
+
+        {/* SAVE BUTTON */}
+        <div className="md:col-span-2 flex justify-end mt-6">
+          <Button
+            label="Save Changes"
+            className="bg-blue-600 text-white px-6 py-3 rounded-full shadow hover:bg-blue-700 transition"
+            onClick={saveChanges}
+          />
+        </div>
+      </div>
+    </div>
+  )}
+</Dialog>
 
       {/* Delete Confirmation Dialog */}
       <Dialog

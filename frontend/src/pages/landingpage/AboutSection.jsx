@@ -1,3 +1,5 @@
+import Logo from "../../images/ch-logo.png";
+
 const AboutSection = () => {
     return (
         <section id="about" className="py-20 bg-white">
@@ -67,7 +69,7 @@ const AboutSection = () => {
               <div className="relative">
                 <div className="bg-gradient-to-br from-amber-100 to-amber-50 rounded-3xl p-8 shadow-2xl">
                   <img
-                    src="https://images.pexels.com/photos/8468139/pexels-photo-8468139.jpeg?auto=compress&cs=tinysrgb&w=800"
+                  src={Logo}
                     alt="Worship"
                     className="rounded-2xl shadow-xl w-full h-96 object-cover"
                   />

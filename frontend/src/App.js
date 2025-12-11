@@ -15,6 +15,8 @@ import Dashboard from "./pages/Dashboard";
 import Members from "./pages/Members";
 import AddMembers from "./pages/Addmembers";
 import Comment from "./pages/Comment";
+import Groups from "./pages/Groups";
+import Creategroup from "./pages/Creategroup";
 import Landingpage from "./pages/landingpage/Landingpage";
 import ProtectedRoute from "./component/ProtectedRoute";
 import NotFound from "./component/NotFounfd";
@@ -34,6 +36,8 @@ function App() {
     "/dashboard",
     "/members",
     "/addmembers",
+    "/groups",
+    "/creategroup",
     "/comment",
   ];
 
@@ -108,6 +112,22 @@ function App() {
             }
           />
 
+          <Route
+            path="/groups"
+            element={
+              <ProtectedRoute>
+                <Groups />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/creategroup"
+            element={
+              <ProtectedRoute>
+                <Creategroup />
+              </ProtectedRoute>
+            }
+          />
           <Route
             path="/comment"
             element={

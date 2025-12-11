@@ -6,8 +6,8 @@ import {
   FaLayerGroup,
   FaCommentAlt,
   FaShoppingBag,
-  FaSignOutAlt,
   FaThList,
+  FaSignOutAlt,
 } from "react-icons/fa";
 import chLogo from "../images/ch-logo.png";
 import { NavLink, Outlet, useNavigate } from "react-router-dom";
@@ -21,18 +21,16 @@ const Sidebar = ({ children }) => {
 
   const dispatch = useDispatch();
   const navigate = useNavigate();
-
   const user = useSelector((state) => state.auth.user);
 
- const handleLogout = async () => {
-  try {
-    await dispatch(logoutUser())
-    navigate("/signin", { replace: true });
-  } catch (error) {
-    console.error("Logout failed:", error);
-  }
-};
-
+  const handleLogout = async () => {
+    try {
+      await dispatch(logoutUser());
+      navigate("/signin", { replace: true });
+    } catch (error) {
+      console.error("Logout failed:", error);
+    }
+  };
 
   const menuItem = [
     { path: "/dashboard", name: "Dashboard", icon: <FaTh /> },
@@ -41,12 +39,16 @@ const Sidebar = ({ children }) => {
     { path: "/comment", name: "Comment", icon: <FaCommentAlt /> },
     { path: "/product", name: "Product", icon: <FaShoppingBag /> },
     { path: "/productList", name: "Product List", icon: <FaThList /> },
+
+    // 🔥 Special logout item
+    { type: "logout", name: "Logout", icon: <FaSignOutAlt /> },
   ];
 
   return (
     <div className="sidebar-container">
       <div style={{ width: isOpen ? "200px" : "50px" }} className="sidebar">
 
+        {/* TOP SECTION */}
         <div className="top_section">
           <img
             src={chLogo}
@@ -54,11 +56,12 @@ const Sidebar = ({ children }) => {
             style={{ display: isOpen ? "block" : "none" }}
             className="logo"
           />
-          <div className="bars">
+          <div style={{ marginLeft: isOpen ? "50px" : "0px" }} className="bars">
             <FaBars onClick={toggle} />
           </div>
         </div>
 
+        {/* USER INFO */}
         {isOpen && user && (
           <div className="user-info">
             <p className="user-name">
@@ -67,23 +70,34 @@ const Sidebar = ({ children }) => {
           </div>
         )}
 
-        {menuItem.map((item, index) => (
-          <NavLink
-            to={item.path}
-            key={index}
-            className={({ isActive }) => (isActive ? "link active" : "link")}
-          >
-            <div className="icon">{item.icon}</div>
-            {isOpen && <div className="link_text">{item.name}</div>}
-          </NavLink>
-        ))}
+        {/* MENU ITEMS */}
+        {menuItem.map((item, index) => {
+          if (item.type === "logout") {
+            return (
+              <button
+                key={index}
+                onClick={handleLogout}
+                className="link logout-btn"
+              >
+                <div className="icon">{item.icon}</div>
+                {isOpen && <div className="link_text">{item.name}</div>}
+              </button>
+            );
+          }
 
-        <div className="logout-section">
-          <button className="logout-btn" onClick={handleLogout}>
-            <FaSignOutAlt />
-            {isOpen && <span style={{ marginLeft: "10px" }}>Logout</span>}
-          </button>
-        </div>
+          return (
+            <NavLink
+              to={item.path}
+              key={index}
+              className={({ isActive }) =>
+                isActive ? "link active" : "link"
+              }
+            >
+              <div className="icon">{item.icon}</div>
+              {isOpen && <div className="link_text">{item.name}</div>}
+            </NavLink>
+          );
+        })}
 
       </div>
 
