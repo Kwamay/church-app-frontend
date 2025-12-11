@@ -47,7 +47,6 @@ const Sidebar = ({ children }) => {
   return (
     <div className="sidebar-container">
       <div style={{ width: isOpen ? "200px" : "50px" }} className="sidebar">
-
         {/* TOP SECTION */}
         <div className="top_section">
           <img
@@ -89,16 +88,13 @@ const Sidebar = ({ children }) => {
             <NavLink
               to={item.path}
               key={index}
-              className={({ isActive }) =>
-                isActive ? "link active" : "link"
-              }
+              className={({ isActive }) => (isActive ? "link active" : "link")}
             >
               <div className="icon">{item.icon}</div>
               {isOpen && <div className="link_text">{item.name}</div>}
             </NavLink>
           );
         })}
-
       </div>
 
       <main>{children}</main>
