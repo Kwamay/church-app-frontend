@@ -1,13 +1,13 @@
 // src/api/axios.js
 import axios from 'axios';
 
-// const axiosInstance = axios.create({
-//   baseURL: 'https://church-app-backend-q9z7.onrender.com/',  // Django API URL
-// });
-
 const axiosInstance = axios.create({
-  baseURL: 'http://127.0.0.1:8000/',  // Django API URL
+  baseURL: 'https://church-app-backend-q9z7.onrender.com/',  // Django API URL
 });
+
+// const axiosInstance = axios.create({
+//   baseURL: 'http://127.0.0.1:8000/',  // Django API URL
+// });
 
 axiosInstance.interceptors.request.use(
   (config) => {
