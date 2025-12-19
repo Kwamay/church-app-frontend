@@ -1,15 +1,17 @@
-import React, { useEffect } from "react";
+import axios from "axios";
+import { useEffect } from "react";
+
 import {
   BrowserRouter as Router,
   Routes,
   Route,
   useLocation,
+  Navigate,
 } from "react-router-dom";
 
 import Signup from "./component/Signup";
 import Signin from "./component/Signin";
 import ForgotPassword from "./component/ForgotPassword";
-import "./css/signin.css";
 import Sidebar from "./component/Sidebar";
 import Dashboard from "./pages/Dashboard";
 import Members from "./pages/Members";
@@ -23,13 +25,11 @@ import NotFound from "./component/NotFounfd";
 import GuestRoute from "./component/GuestRoute";
 import AdminProtectedRoute from "./component/AdminProtectedRoute";
 
+import "./css/signin.css";
 import "./css/app.css";
-import { useDispatch } from "react-redux";
-import { logout } from "./redaux/slices/authSlice";
 
 function App() {
   const location = useLocation();
-  const dispatch = useDispatch();
 
   // SHOW SIDEBAR ONLY ON INTERNAL LOGGED-IN ROUTES
   const sidebarVisiblePaths = [
@@ -41,20 +41,28 @@ function App() {
     "/comment",
   ];
 
-  // Check for token expiration
+  // 🔐 CHECK TOKEN ON APP LOAD
   useEffect(() => {
-    const checkTokenExpiry = () => {
-      const expiry = localStorage.getItem("tokenExpiry");
-      if (expiry && new Date().getTime() > expiry) {
-        dispatch(logout());
-        alert("Session expired! Please log in again.");
+    const checkToken = async () => {
+      const token = localStorage.getItem("token"); // must match login key
+      if (!token) return; // do not send request if no token
+
+      try {
+        const response = await axios.get("http://localhost:8000/auth/check/", {
+          headers: { Authorization: `Token ${token}` },
+        });
+        return response;
+      } catch (err) {
+        if (err.response?.status === 401) {
+          console.log("Token invalid or expired. Clearing token.");
+          localStorage.removeItem("token");
+          window.location.href = "/signin";
+        }
       }
     };
 
-    checkTokenExpiry();
-    const interval = setInterval(checkTokenExpiry, 60000);
-    return () => clearInterval(interval);
-  }, [dispatch]);
+    checkToken();
+  }, []);
 
   return (
     <div className="app-container">
@@ -63,8 +71,9 @@ function App() {
 
       <div className="app-content">
         <Routes>
-          {/* Public pages */}
+          {/* Public routes */}
           <Route path="/" element={<Landingpage />} />
+
           <Route
             path="/signin"
             element={
@@ -82,9 +91,10 @@ function App() {
               </GuestRoute>
             }
           />
+
           <Route path="/forgot-password" element={<ForgotPassword />} />
 
-          {/* Protected pages */}
+          {/* Protected routes */}
           <Route
             path="/dashboard"
             element={
@@ -120,6 +130,7 @@ function App() {
               </ProtectedRoute>
             }
           />
+
           <Route
             path="/creategroup"
             element={
@@ -128,6 +139,7 @@ function App() {
               </ProtectedRoute>
             }
           />
+
           <Route
             path="/comment"
             element={
@@ -137,7 +149,7 @@ function App() {
             }
           />
 
-          {/* 404 Page */}
+          {/* 404 */}
           <Route path="*" element={<NotFound />} />
         </Routes>
       </div>
